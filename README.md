@@ -1,20 +1,19 @@
-# AgenticSeek: Private, Local Manus Alternative.
+# H1DR4
 
 <p align="center">
-<img align="center" src="./media/agentic_seek_logo.png" width="300" height="300" alt="Agentic Seek Logo">
 <p>
 
   English | [中文](./README_CHS.md) | [繁體中文](./README_CHT.md) | [Français](./README_FR.md) | [日本語](./README_JP.md) | [Português (Brasil)](./README_PTBR.md) | [Español](./README_ES.md)
 
 *A **100% local alternative to Manus AI**, this voice-enabled AI assistant autonomously browses the web, writes code, and plans tasks while keeping all data on your device. Tailored for local reasoning models, it runs entirely on your hardware, ensuring complete privacy and zero cloud dependency.*
 
-[![Visit AgenticSeek](https://img.shields.io/static/v1?label=Website&message=AgenticSeek&color=blue&style=flat-square)](https://fosowl.github.io/agenticSeek.html) ![License](https://img.shields.io/badge/license-GPL--3.0-green) [![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289DA?logo=discord&logoColor=white)](https://discord.gg/8hGDaME3TC) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/fosowl.svg?style=social&label=Update%20%40Fosowl)](https://x.com/Martin993886460) [![GitHub stars](https://img.shields.io/github/stars/Fosowl/agenticSeek?style=social)](https://github.com/Fosowl/agenticSeek/stargazers)
+[![Visit H1DR4](https://img.shields.io/static/v1?label=Website&message=H1DR4&color=blue&style=flat-square)](https://h1dr4.dev) ![License](https://img.shields.io/badge/license-GPL--3.0-green) [![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289DA?logo=discord&logoColor=white)](https://discord.gg/8hGDaME3TC) [![GitHub stars](https://img.shields.io/github/stars/nativ3ai/H1DR4?style=social)](https://github.com/nativ3ai/H1DR4/stargazers)
 
-### Why AgenticSeek ?
+### Why H1DR4 ?
 
 * 🔒 Fully Local & Private - Everything runs on your machine — no cloud, no data sharing. Your files, conversations, and searches stay private.
 
-* 🌐 Smart Web Browsing - AgenticSeek can browse the internet by itself — search, read, extract info, fill web form — all hands-free.
+* 🌐 Smart Web Browsing - H1DR4 can browse the internet by itself — search, read, extract info, fill web form — all hands-free.
 
 * 💻 Autonomous Coding Assistant - Need code? It can write, debug, and run programs in Python, C, Go, Java, and more — all without supervision.
 
@@ -26,7 +25,7 @@
 
 ### **Demo**
 
-> *Can you search for the agenticSeek project, learn what skills are required, then open the CV_candidates.zip and then tell me which match best the project*
+> *Can you search for the H1DR4 project, learn what skills are required, then open the CV_candidates.zip and then tell me which match best the project*
 
 https://github.com/user-attachments/assets/b8ca60e9-7b3b-4533-840e-08f9ac426316
 
@@ -49,8 +48,8 @@ Before you begin, ensure you have the following software installed:
 ### 1. **Clone the repository and setup**
 
 ```sh
-git clone https://github.com/Fosowl/agenticSeek.git
-cd agenticSeek
+git clone https://github.com/nativ3ai/H1DR4.git
+cd H1DR4
 mv .env.example .env
 ```
 
@@ -76,7 +75,7 @@ Update the `.env` file with your own values as needed:
 
 - **SEARXNG_BASE_URL**: Leave unchanged 
 - **REDIS_BASE_URL**: Leave unchanged 
-- **WORK_DIR**: Path to your working directory on your local machine. AgenticSeek will be able to read and interact with these files.
+- **WORK_DIR**: Path to your working directory on your local machine. H1DR4 will be able to read and interact with these files.
 - **OLLAMA_PORT**: Port number for the Ollama service.
 - **LM_STUDIO_PORT**: Port number for the LM Studio service.
 - **CUSTOM_ADDITIONAL_LLM_PORT**: Port for any additional custom LLM service.
@@ -105,7 +104,7 @@ If you see information about your Docker installation, it is running correctly.
 
 See the table of [Local Providers](#list-of-local-providers) below for a summary.
 
-Next step: [Run AgenticSeek locally](#start-services-and-run)
+Next step: [Run H1DR4 locally](#start-services-and-run)
 
 *See the [Troubleshooting](#troubleshooting) section if you are having issues.*
 *If your hardware can't run LLMs locally, see [Setup to run with an API](#setup-to-run-with-an-api).*
@@ -237,7 +236,7 @@ provider_server_address = # Typically ignored or can be left blank when is_local
 *   Coding/bash tasks might encounter issues with Gemini, as it may not strictly follow formatting prompts optimized for Deepseek.
 *   The `provider_server_address` in `config.ini` is generally not used when `is_local = False` as the API endpoint is usually hardcoded in the respective provider's library.
 
-Next step: [Start services and run AgenticSeek](#Start-services-and-Run)
+Next step: [Start services and run H1DR4](#Start-services-and-Run)
 
 *See the **Known issues** section if you are having issues*
 
@@ -247,7 +246,7 @@ Next step: [Start services and run AgenticSeek](#Start-services-and-Run)
 
 ## Start services and Run
 
-By default AgenticSeek is run fully in docker.
+By default H1DR4 is run fully in docker.
 
 **Option 1:** Run in Docker, use web interface:
 
@@ -266,7 +265,7 @@ start start_services.cmd full # Window
 
 Go to `http://localhost:3000/` and you should see the web interface.
 
-*Troubleshooting service start:* If these scripts fail, ensure Docker Engine is running and Docker Compose (V2, `docker compose`) is correctly installed. Check the output in the terminal for error messages. See [FAQ: Help! I get an error when running AgenticSeek or its scripts.](#faq-troubleshooting)
+*Troubleshooting service start:* If these scripts fail, ensure Docker Engine is running and Docker Compose (V2, `docker compose`) is correctly installed. Check the output in the terminal for error messages. See [FAQ: Help! I get an error when running H1DR4 or its scripts.](#faq-troubleshooting)
 
 **Option 2:** CLI mode:
 
@@ -320,7 +319,7 @@ Here are some example usage:
 
 
 
-After you type your query, AgenticSeek will allocate the best agent for the task.
+After you type your query, H1DR4 will allocate the best agent for the task.
 
 Because this is an early prototype, the agent routing system might not always allocate the right agent based on your query.
 
@@ -351,8 +350,8 @@ Clone the repository and enter the `server/`folder.
 
 
 ```sh
-git clone --depth 1 https://github.com/Fosowl/agenticSeek.git
-cd agenticSeek/llm_server/
+git clone --depth 1 https://github.com/nativ3ai/H1DR4.git
+cd H1DR4/llm_server/
 ```
 
 Install server specific requirements:

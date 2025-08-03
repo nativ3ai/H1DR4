@@ -12,6 +12,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [files, setFiles] = useState([]);
   const [error, setError] = useState(null);
   const [currentView, setCurrentView] = useState("blocks");
   const [responseData, setResponseData] = useState(null);
@@ -155,13 +156,44 @@ function App() {
     }
   };
 
+  const handleFileUpload = async () => {
+    if (files.length === 0) {
+      return;
+    }
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+
+    try {
+      await axios.post(`${BACKEND_URL}/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (err) {
+      console.error("Error uploading files:", err);
+      setError("Failed to upload files.");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     checkHealth();
-    if (!query.trim()) {
-      console.log("Empty query");
+    if (!query.trim() && files.length === 0) {
+      console.log("Empty query and no files");
       return;
     }
+
+    if (files.length > 0) {
+      await handleFileUpload();
+    }
+
+    if (!query.trim()) {
+      return;
+    }
+
     setMessages((prev) => [...prev, { type: "user", content: query }]);
     setIsLoading(true);
     setError(null);
@@ -188,6 +220,7 @@ function App() {
       console.log("Query completed");
       setIsLoading(false);
       setQuery("");
+      setFiles([]);
     }
   };
 
@@ -306,6 +339,24 @@ function App() {
                 disabled={isLoading}
               />
               <div className="action-buttons">
+                <input
+                  type="file"
+                  multiple
+                  onChange={(e) => setFiles(e.target.files)}
+                  style={{ display: "none" }}
+                  id="file-input"
+                />
+                <label htmlFor="file-input" className="icon-button">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M21.44 11.05l-9.19-9.19a6.003 6.003 0 00-8.49 8.49l9.19 9.19a4.002 4.002 0 005.66-5.66l-9.2-9.19a2.001 2.001 0 00-2.83 2.83l8.49 8.48"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </label>
                 <button
                   type="submit"
                   disabled={isLoading}

@@ -217,3 +217,46 @@ for file in os.listdir():
 goodbye!
     """)
     print(rt)
+
+class ListFilesTool(Tools):
+    def __init__(self):
+        super().__init__()
+        self.name = "list_files"
+        self.tag = "list_files"
+        self.description = "List all files in the work directory."
+
+    def execute(self, blocks:[str], safety:bool) -> str:
+        work_dir = self.get_work_dir()
+        files = os.listdir(work_dir)
+        return "\n".join(files)
+
+    def execution_failure_check(self, output:str) -> bool:
+        return output.startswith("Error:")
+
+    def interpreter_feedback(self, output:str) -> str:
+        if self.execution_failure_check(output):
+            return f"Failed to list files: {output}"
+        return f"Files in the work directory:\n{output}"
+
+class ReadFileTool(Tools):
+    def __init__(self):
+        super().__init__()
+        self.name = "read_file"
+        self.tag = "read_file"
+        self.description = "Read the content of a file in the work directory."
+
+    def execute(self, blocks:[str], safety:bool) -> str:
+        work_dir = self.get_work_dir()
+        file_path = os.path.join(work_dir, blocks[0])
+        if not os.path.exists(file_path):
+            return f"Error: File not found at {file_path}"
+        with open(file_path, "r") as f:
+            return f.read()
+
+    def execution_failure_check(self, output:str) -> bool:
+        return output.startswith("Error:")
+
+    def interpreter_feedback(self, output:str) -> str:
+        if self.execution_failure_check(output):
+            return f"Failed to read file: {output}"
+        return f"File content:\n{output}"

@@ -27,15 +27,19 @@ class Logger:
     
     def create_folder(self, path):
         """Create log dir"""
+        print(f"Creating folder: {path}")
         try:
             if not os.path.exists(path):
                 os.makedirs(path, exist_ok=True) 
+            print("Folder created successfully")
             return True
         except Exception as e:
+            print(f"Error creating folder: {e}")
             self.enabled = False
             return False
     
     def log(self, message, level=logging.INFO):
+        print(f"Logging message: {message}")
         if self.last_log_msg == message:
             return
         if self.enabled:

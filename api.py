@@ -7,7 +7,7 @@ import configparser
 import asyncio
 import time
 from typing import List
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,6 +17,7 @@ import uuid
 from sources.llm_provider import Provider
 from sources.interaction import Interaction
 from sources.agents import CasualAgent, CoderAgent, FileAgent, PlannerAgent, BrowserAgent
+from sources.tools.tools import ListFilesTool, ReadFileTool
 from sources.browser import Browser, create_driver
 from sources.utility import pretty_print
 from sources.logger import Logger
@@ -126,7 +127,9 @@ def initialize_system():
             name="Planner",
             prompt_path=f"prompts/{personality_folder}/planner_agent.txt",
             provider=provider, verbose=False, browser=browser
-        )
+        ),
+        ListFilesTool(),
+        ReadFileTool()
     ]
     logger.info("Agents initialized")
 
@@ -217,6 +220,20 @@ async def think_wrapper(interaction, query):
         interaction.last_reasoning = f"Error: {str(e)}"
         interaction.last_success = False
         raise e
+
+@api.post("/upload")
+async def upload_files(files: List[UploadFile] = File(...)):
+    work_dir = config["MAIN"]["work_dir"]
+    if not os.path.exists(work_dir):
+        os.makedirs(work_dir)
+
+    for file in files:
+        file_path = os.path.join(work_dir, file.filename)
+        async with aiofiles.open(file_path, "wb") as f:
+            content = await file.read()
+            await f.write(content)
+
+    return JSONResponse(status_code=200, content={"message": "Files uploaded successfully"})
 
 @api.post("/query", response_model=QueryResponse)
 async def process_query(request: QueryRequest):

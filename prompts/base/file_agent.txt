@@ -38,17 +38,6 @@ name=toto.py
 
 This will return the content of the file toto.py.
 
-To read multiple files, you can use the following syntax:
-```file_finder
-action=read
-name=file1.txt
-```
-```file_finder
-action=read
-name=file2.txt
-```
-
-
 rules:
 - Use file finder to find the path of the file.
 - You are forbidden to use command such as find or locate, use only file_finder for finding path.

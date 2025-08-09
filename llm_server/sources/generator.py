@@ -10,7 +10,7 @@ class GenerationState:
         self.last_complete_sentence = ""
         self.current_buffer = ""
         self.is_generating = False
-    
+
     def status(self) -> dict:
         return {
             "sentence": self.current_buffer,
@@ -31,11 +31,11 @@ class GeneratorLLM():
         self.logger.addHandler(handler)
         self.logger.setLevel(logging.INFO)
         cache = Cache()
-    
+
     def set_model(self, model: str) -> None:
         self.logger.info(f"Model set to {model}")
         self.model = model
-    
+
     def start(self, history: list) -> bool:
         if self.model is None:
             raise Exception("Model not set")
@@ -46,7 +46,7 @@ class GeneratorLLM():
             self.logger.info("Starting generation")
             threading.Thread(target=self.generate, args=(history,)).start()
         return True
-    
+
     def get_status(self) -> dict:
         with self.state.lock:
             return self.state.status()

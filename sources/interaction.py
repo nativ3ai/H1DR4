@@ -154,6 +154,14 @@ class Interaction:
         agent = self.router.select_agent(self.last_query)
         if agent is None:
             return False
+
+        if agent.type == "reasoning_agent":
+            pretty_print("This query requires advanced reasoning. Do you want to proceed with the intelligence reasoning endpoint? (y/n)", color="warning")
+            confirmation = self.read_stdin()
+            if confirmation.lower() != 'y':
+                pretty_print("Using normal agent as fallback.", color="status")
+                agent = self.router.get_agent_by_type("casual_agent")
+
         if self.current_agent != agent and self.last_answer is not None:
             push_last_agent_memory = True
         tmp = self.last_answer

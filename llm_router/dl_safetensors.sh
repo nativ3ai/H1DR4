@@ -21,7 +21,7 @@ if [ ! -f "$FILENAME" ]; then
         echo "Error: Neither curl nor wget is available. Please install one of them."
         exit 1
     fi
-    
+
     if [ $? -eq 0 ]; then
         echo "Download completed successfully"
     else

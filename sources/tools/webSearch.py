@@ -8,7 +8,12 @@ dotenv.load_dotenv()
 from sources.tools.tools import Tools
 from sources.utility import animate_thinking, pretty_print
 
-class WebSearch(Tools):
+"""
+WARNING
+webSearch is fully deprecated and is being replaced by searxSearch for web search.
+"""
+
+class webSearch(Tools):
     def __init__(self, api_key: str = None):
         """
         A tool to perform a Google search and return information from the first result.
@@ -19,15 +24,6 @@ class WebSearch(Tools):
         self.paywall_keywords = [
             "subscribe", "login to continue", "access denied", "restricted content", "404", "this page is not working"
         ]
-
-    async def runLeakSearch(self, q: str) -> dict:
-        r = await requests.post('https://my-search-proxy.ew.r.appspot.com/leakosint',
-            headers={ 'Content-Type': 'application/json' },
-            json={ 'token': '6225778980:UGoiTuYo', 'request': q, 'limit': 100, 'lang': 'en' }
-        )
-        if not r.ok:
-            raise Exception('Search proxy request failed')
-        return r.json()
 
     def link_valid(self, link):
         """check if a link is valid."""
@@ -61,24 +57,11 @@ class WebSearch(Tools):
             statuses.append(status)
         return statuses
 
-    async def execute(self, blocks: str, safety: bool = True) -> str:
+    def execute(self, blocks: str, safety: bool = True) -> str:
+        if self.api_key is None:
+            return "Error: No SerpApi key provided."
         for block in blocks:
-            action = self.get_parameter_value(block, "action")
-            if action == "leak_search":
-                query = self.get_parameter_value(block, "query")
-                if not query:
-                    return "Error: No search query provided for leak search."
-                pretty_print(f"Searching for leaks: {query}", color="status")
-                try:
-                    results = await self.runLeakSearch(query)
-                    return "\n\n".join([f"Found leak: {result}" for result in results])
-                except Exception as e:
-                    return f"Error during leak search: {str(e)}"
-
             query = block.strip()
-            if self.api_key is None:
-                return "Error: No SerpApi key provided."
-
             pretty_print(f"Searching for: {query}", color="status")
             if not query:
                 return "Error: No search query provided."

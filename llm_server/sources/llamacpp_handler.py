@@ -11,7 +11,7 @@ class LlamacppLLM(GeneratorLLM):
         """
         super().__init__()
         self.llm = None
-    
+
     @timer_decorator
     def generate(self, history):
         if self.llm is None:

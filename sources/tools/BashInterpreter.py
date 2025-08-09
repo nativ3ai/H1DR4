@@ -32,7 +32,7 @@ class BashInterpreter(Tools):
                 return True
         return False
     
-    async def execute(self, commands: str, safety=False, timeout=300):
+    def execute(self, commands: str, safety=False, timeout=300):
         """
         Execute bash commands and display output in real-time.
         """
@@ -49,19 +49,23 @@ class BashInterpreter(Tools):
             if self.language_bash_attempt(command) and self.allow_language_exec_bash == False:
                 continue
             try:
-                process = await asyncio.create_subprocess_shell(
+                process = subprocess.Popen(
                     command,
-                    stdout=asyncio.subprocess.PIPE,
-                    stderr=asyncio.subprocess.STDOUT
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    universal_newlines=True
                 )
-                stdout, _ = await asyncio.wait_for(process.communicate(), timeout=timeout)
-                command_output = stdout.decode()
-                if process.returncode != 0:
-                    return f"Command {command} failed with return code {process.returncode}:\n{command_output}"
+                command_output = ""
+                for line in process.stdout:
+                    command_output += line
+                return_code = process.wait(timeout=timeout)
+                if return_code != 0:
+                    return f"Command {command} failed with return code {return_code}:\n{command_output}"
                 concat_output += f"Output of {command}:\n{command_output.strip()}\n"
-            except asyncio.TimeoutError:
-                process.kill()
-                return f"Command {command} timed out."
+            except subprocess.TimeoutExpired:
+                process.kill()  # Kill the process if it times out
+                return f"Command {command} timed out. Output:\n{command_output}"
             except Exception as e:
                 return f"Command {command} failed:\n{str(e)}"
         return concat_output

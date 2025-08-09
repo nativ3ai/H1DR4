@@ -437,7 +437,7 @@ class AgentRouter:
         pretty_print(f"Error finding planner agent. Please add a planner agent to the list of agents.", color="failure")
         self.logger.error("Planner agent not found.")
         return None
-    
+
     def get_agent_by_type(self, agent_type: str) -> Agent:
         """
         Find an agent by its type.

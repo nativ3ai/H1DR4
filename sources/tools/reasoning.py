@@ -1,5 +1,5 @@
 import os
-import requests
+import httpx
 from sources.tools.tools import Tools
 from sources.utility import pretty_print
 
@@ -23,11 +23,12 @@ class Reasoning(Tools):
                 payload["context"] = context
 
             try:
-                response = requests.post(self.url, json=payload)
-                response.raise_for_status()
-                data = response.json()
-                return data.get("response", "No response from reasoning engine.")
-            except requests.RequestException as e:
+                async with httpx.AsyncClient() as client:
+                    response = await client.post(self.url, json=payload)
+                    response.raise_for_status()
+                    data = response.json()
+                    return data.get("response", "No response from reasoning engine.")
+            except httpx.RequestError as e:
                 return f"Error during reasoning request: {str(e)}"
             except Exception as e:
                 return f"Unexpected error: {str(e)}"

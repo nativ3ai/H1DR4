@@ -7,7 +7,7 @@ import asyncio
 
 from sources.llm_provider import Provider
 from sources.interaction import Interaction
-from sources.agents import Agent, CoderAgent, CasualAgent, FileAgent, PlannerAgent, BrowserAgent, McpAgent
+from sources.agents import Agent, CoderAgent, CasualAgent, FileAgent, PlannerAgent, BrowserAgent, McpAgent, ReasoningAgent
 from sources.browser import Browser, create_driver
 from sources.utility import pretty_print
 
@@ -49,6 +49,9 @@ async def main():
         PlannerAgent(name="Planner",
                      prompt_path=f"prompts/{personality_folder}/planner_agent.txt",
                      provider=provider, verbose=False, browser=browser),
+        ReasoningAgent(name="Reasoning",
+                       prompt_path=f"prompts/{personality_folder}/reasoning_agent.txt",
+                       provider=provider, verbose=False),
         #McpAgent(name="MCP Agent",
         #            prompt_path=f"prompts/{personality_folder}/mcp_agent.txt",
         #            provider=provider, verbose=False), # NOTE under development

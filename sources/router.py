@@ -438,6 +438,19 @@ class AgentRouter:
         self.logger.error("Planner agent not found.")
         return None
     
+    def get_agent_by_type(self, agent_type: str) -> Agent:
+        """
+        Find an agent by its type.
+        Args:
+            agent_type (str): The type of the agent to find
+        Returns:
+            Agent: The agent if found, None otherwise
+        """
+        for agent in self.agents:
+            if agent.type == agent_type:
+                return agent
+        return None
+
     def select_agent(self, text: str) -> Agent:
         """
         Select the appropriate agent based on the text.

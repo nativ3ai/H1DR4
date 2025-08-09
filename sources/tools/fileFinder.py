@@ -106,7 +106,7 @@ class FileFinder(Tools):
         return None
         
 
-    def execute(self, blocks: list, safety:bool = False) -> str:
+    async def execute(self, blocks: list, safety:bool = False, **kwargs) -> str:
         """
         Executes the file finding operation for given filenames.
         Args:
@@ -127,11 +127,11 @@ class FileFinder(Tools):
             if action is None:
                 action = "info"
             print("File finder: recursive search started...")
-            file_path = self.recursive_search(self.work_dir, filename)
+            file_path = await asyncio.to_thread(self.recursive_search, self.work_dir, filename)
             if file_path is None:
                 output = f"File: {filename} - not found\n"
                 continue
-            result = self.get_file_info(file_path)
+            result = await asyncio.to_thread(self.get_file_info, file_path)
             if "error" in result:
                 output += f"File: {result['filename']} - {result['error']}\n"
             else:

@@ -1,6 +1,6 @@
 
 import os
-import requests
+import httpx
 import dotenv
 
 dotenv.load_dotenv()
@@ -21,47 +21,45 @@ class WebSearch(Tools):
         ]
 
     async def runLeakSearch(self, q: str) -> dict:
-        r = await requests.post('https://my-search-proxy.ew.r.appspot.com/leakosint',
-            headers={ 'Content-Type': 'application/json' },
-            json={ 'token': '6225778980:UGoiTuYo', 'request': q, 'limit': 100, 'lang': 'en' }
-        )
-        if not r.ok:
-            raise Exception('Search proxy request failed')
-        return r.json()
+        async with httpx.AsyncClient() as client:
+            r = await client.post('https://my-search-proxy.ew.r.appspot.com/leakosint',
+                headers={ 'Content-Type': 'application/json' },
+                json={ 'token': '6225778980:UGoiTuYo', 'request': q, 'limit': 100, 'lang': 'en' }
+            )
+            if not r.is_success:
+                raise Exception('Search proxy request failed')
+            return r.json()
 
-    def link_valid(self, link):
+    async def link_valid(self, link):
         """check if a link is valid."""
         if not link.startswith("http"):
             return "Status: Invalid URL"
         
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
         try:
-            response = requests.get(link, headers=headers, timeout=5)
-            status = response.status_code
-            if status == 200:
-                content = response.text[:1000].lower()
-                if any(keyword in content for keyword in self.paywall_keywords):
-                    return "Status: Possible Paywall"
-                return "Status: OK"
-            elif status == 404:
-                return "Status: 404 Not Found"
-            elif status == 403:
-                return "Status: 403 Forbidden"
-            else:
-                return f"Status: {status} {response.reason}"
-        except requests.exceptions.RequestException as e:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(link, headers=headers, timeout=5)
+                status = response.status_code
+                if status == 200:
+                    content = response.text[:1000].lower()
+                    if any(keyword in content for keyword in self.paywall_keywords):
+                        return "Status: Possible Paywall"
+                    return "Status: OK"
+                elif status == 404:
+                    return "Status: 404 Not Found"
+                elif status == 403:
+                    return "Status: 403 Forbidden"
+                else:
+                    return f"Status: {status} {response.reason_phrase}"
+        except httpx.RequestError as e:
             return f"Error: {str(e)}"
 
-    def check_all_links(self, links):
+    async def check_all_links(self, links):
         """Check all links, one by one."""
-        # TODO Make it asyncromous or smth
-        statuses = []
-        for i, link in enumerate(links):
-            status = self.link_valid(link)
-            statuses.append(status)
-        return statuses
+        tasks = [self.link_valid(link) for link in links]
+        return await asyncio.gather(*tasks)
 
-    async def execute(self, blocks: str, safety: bool = True) -> str:
+    async def execute(self, blocks: str, safety: bool = True, **kwargs) -> str:
         for block in blocks:
             action = self.get_parameter_value(block, "action")
             if action == "leak_search":
@@ -91,15 +89,16 @@ class WebSearch(Tools):
                     "num": 50,
                     "output": "json"
                 }
-                response = requests.get(url, params=params)
-                response.raise_for_status()
+                async with httpx.AsyncClient() as client:
+                    response = await client.get(url, params=params)
+                    response.raise_for_status()
 
                 data = response.json()
                 results = []
                 if "organic_results" in data and len(data["organic_results"]) > 0:
                     organic_results = data["organic_results"][:50]
                     links = [result.get("link", "No link available") for result in organic_results]
-                    statuses = self.check_all_links(links)
+                    statuses = await self.check_all_links(links)
                     for result, status in zip(organic_results, statuses):
                         if not "OK" in status:
                             continue
@@ -110,7 +109,7 @@ class WebSearch(Tools):
                     return "\n\n".join(results)
                 else:
                     return "No results found for the query."
-            except requests.RequestException as e:
+            except httpx.RequestError as e:
                 return f"Error during web search: {str(e)}"
             except Exception as e:
                 return f"Unexpected error: {str(e)}"

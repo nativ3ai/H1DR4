@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 
 import httpx
 import requests
+import requests
 from dotenv import load_dotenv
 from ollama import Client as OllamaClient
 from openai import OpenAI

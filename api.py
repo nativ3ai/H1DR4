@@ -16,7 +16,7 @@ import uuid
 
 from sources.llm_provider import Provider
 from sources.interaction import Interaction
-from sources.agents import CasualAgent, CoderAgent, FileAgent, PlannerAgent, BrowserAgent, OsintAgent
+from sources.agents import CasualAgent, CoderAgent, FileAgent, PlannerAgent, BrowserAgent, OsintAgent, ReasoningAgent
 from sources.browser import Browser, create_driver
 from sources.utility import pretty_print
 from sources.logger import Logger
@@ -130,6 +130,11 @@ def initialize_system():
         OsintAgent(
             name="OSINT",
             prompt_path=f"prompts/{personality_folder}/osint_agent.txt",
+            provider=provider, verbose=False
+        ),
+        ReasoningAgent(
+            name="Reasoning",
+            prompt_path=f"prompts/{personality_folder}/reasoning_agent.txt",
             provider=provider, verbose=False
         )
     ]

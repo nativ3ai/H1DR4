@@ -7,7 +7,7 @@ import configparser
 import asyncio
 import time
 from typing import List
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,7 +16,7 @@ import uuid
 
 from sources.llm_provider import Provider
 from sources.interaction import Interaction
-from sources.agents import CasualAgent, CoderAgent, FileAgent, PlannerAgent, BrowserAgent
+from sources.agents import CasualAgent, CoderAgent, FileAgent, PlannerAgent, BrowserAgent, OsintAgent
 from sources.browser import Browser, create_driver
 from sources.utility import pretty_print
 from sources.logger import Logger
@@ -126,6 +126,11 @@ def initialize_system():
             name="Planner",
             prompt_path=f"prompts/{personality_folder}/planner_agent.txt",
             provider=provider, verbose=False, browser=browser
+        ),
+        OsintAgent(
+            name="OSINT",
+            prompt_path=f"prompts/{personality_folder}/osint_agent.txt",
+            provider=provider, verbose=False
         )
     ]
     logger.info("Agents initialized")
@@ -284,12 +289,72 @@ async def process_query(request: QueryRequest):
         if config.getboolean('MAIN', 'save_session'):
             interaction.save_session()
 
+@api.post("/upload")
+async def upload_files(files: List[UploadFile] = File(...)):
+    global is_generating, query_resp_history
+    if len(files) > 10:
+        return JSONResponse(status_code=400, content={"error": "You can upload a maximum of 10 files."})
+
+    if is_generating:
+        logger.warning("Another query is being processed, please wait.")
+        return JSONResponse(status_code=429, content={"error": "Another query is being processed, please wait."})
+
+    work_dir = config['MAIN']['work_dir']
+    if not os.path.exists(work_dir):
+        os.makedirs(work_dir)
+
+    file_paths = []
+    for file in files:
+        file_path = os.path.join(work_dir, file.filename)
+        async with aiofiles.open(file_path, 'wb') as out_file:
+            content = await file.read()
+            await out_file.write(content)
+        file_paths.append(file_path)
+
+    prompt = f"The user has uploaded the following files: {', '.join(file_paths)}. Please process them."
+
+    try:
+        is_generating = True
+        success = await think_wrapper(interaction, prompt)
+        is_generating = False
+
+        if not success:
+            return JSONResponse(status_code=400, content={"error": "Failed to process files."})
+
+        if interaction.current_agent:
+            blocks_json = {f'{i}': block.jsonify() for i, block in enumerate(interaction.current_agent.get_blocks_result())}
+        else:
+            logger.error("No current agent found")
+            blocks_json = {}
+
+        query_resp = {
+            "done": "true",
+            "answer": interaction.last_answer,
+            "reasoning": interaction.last_reasoning,
+            "agent_name": interaction.current_agent.agent_name,
+            "success": str(interaction.last_success),
+            "blocks": blocks_json,
+            "status": "Ready",
+            "uid": str(uuid.uuid4())
+        }
+        query_resp_history.append(query_resp)
+
+        return JSONResponse(status_code=200, content=query_resp)
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}")
+        return JSONResponse(status_code=500, content={"error": str(e)})
+    finally:
+        logger.info("Processing finished")
+        if config.getboolean('MAIN', 'save_session'):
+            interaction.save_session()
+
+
 if __name__ == "__main__":
     # Print startup info
     if is_running_in_docker():
-        print("[AgenticSeek] Starting in Docker container...")
+        print("[H1DR4] Starting in Docker container...")
     else:
-        print("[AgenticSeek] Starting on host machine...")
+        print("[H1DR4] Starting on host machine...")
     
     envport = os.getenv("BACKEND_PORT")
     if envport:

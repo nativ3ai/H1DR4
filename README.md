@@ -28,9 +28,7 @@ This voice-enabled AI assistant autonomously browses the web, writes code, inves
 
 Disclaimer: This demo, including all the files that appear (e.g: CV_candidates.zip), are entirely fictional. We are not a corporation, we seek open-source contributors not candidates.
 
-> 🛠⚠️️ **Active Work in Progress**
-
-> 🙏 This project started as a side-project and has zero roadmap and zero funding. It's grown way beyond what I expected by ending in GitHub Trending. Contributions, feedback, and patience are deeply appreciated.
+> 🛠⚠️️ **Active WIP, this is an open source community project built on top of a Agent Seek with custom additions such as files upload, leaks search (80B+ records) and Intel reasoning endpoint from H1DR4 Oracle**
 
 ## Prerequisites
 

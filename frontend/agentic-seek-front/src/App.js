@@ -156,39 +156,70 @@ function App() {
     }
   };
 
+  const [files, setFiles] = useState([]);
+
+  const handleFileChange = (e) => {
+    setFiles(e.target.files);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     checkHealth();
-    if (!query.trim()) {
-      console.log("Empty query");
-      return;
-    }
-    setMessages((prev) => [...prev, { type: "user", content: query }]);
-    setIsLoading(true);
-    setError(null);
 
-    try {
-      console.log("Sending query:", query);
-      setQuery("waiting for response...");
-      const res = await axios.post(`${BACKEND_URL}/query`, {
-        query,
-        tts_enabled: false,
-      });
-      setQuery("Enter your query...");
-      console.log("Response:", res.data);
-      const data = res.data;
-      updateData(data);
-    } catch (err) {
-      console.error("Error:", err);
-      setError("Failed to process query.");
-      setMessages((prev) => [
-        ...prev,
-        { type: "error", content: "Error: Unable to get a response." },
-      ]);
-    } finally {
-      console.log("Query completed");
-      setIsLoading(false);
-      setQuery("");
+    if (files.length > 0) {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+
+      try {
+        setIsLoading(true);
+        setError(null);
+        const res = await axios.post(`${BACKEND_URL}/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        updateData(res.data);
+      } catch (err) {
+        console.error("Error uploading files:", err);
+        setError("Failed to upload files.");
+      } finally {
+        setIsLoading(false);
+        setFiles([]);
+      }
+    } else {
+      if (!query.trim()) {
+        console.log("Empty query");
+        return;
+      }
+      setMessages((prev) => [...prev, { type: "user", content: query }]);
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        console.log("Sending query:", query);
+        setQuery("waiting for response...");
+        const res = await axios.post(`${BACKEND_URL}/query`, {
+          query,
+          tts_enabled: false,
+        });
+        setQuery("Enter your query...");
+        console.log("Response:", res.data);
+        const data = res.data;
+        updateData(data);
+      } catch (err) {
+        console.error("Error:", err);
+        setError("Failed to process query.");
+        setMessages((prev) => [
+          ...prev,
+          { type: "error", content: "Error: Unable to get a response." },
+        ]);
+      } finally {
+        console.log("Query completed");
+        setIsLoading(false);
+        setQuery("");
+      }
     }
   };
 
@@ -201,14 +232,14 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className="app cyberpunk">
       <header className="header">
         <div className="header-brand">
           <div className="logo-container">
-            <img src={faviconPng} alt="AgenticSeek" className="logo-icon" />
+            <img src={faviconPng} alt="H1DR4" className="logo-icon" />
           </div>
           <div className="brand-text">
-            <h1>AgenticSeek</h1>
+            <h1>H1DR4</h1>
           </div>
         </div>
         <div className="header-status">
@@ -223,7 +254,7 @@ function App() {
         </div>
         <div className="header-actions">
           <a
-            href="https://github.com/Fosowl/agenticSeek"
+            href="https://github.com/h1dr4/h1dr4"
             target="_blank"
             rel="noopener noreferrer"
             className="action-button github-link"
@@ -304,9 +335,21 @@ function App() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Type your query..."
+                placeholder="Type your query or select files..."
                 disabled={isLoading}
               />
+              <input
+                type="file"
+                multiple
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+                id="file-upload"
+              />
+              <label htmlFor="file-upload" className="icon-button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21.44 11.05l-8.49 8.49a6 6 0 0 1-8.49-8.49l8.49-8.49a4 4 0 0 1 5.66 5.66l-8.49 8.49a2 2 0 0 1-2.83-2.83l8.49-8.49" />
+                </svg>
+              </label>
               <div className="action-buttons">
                 <button
                   type="submit"

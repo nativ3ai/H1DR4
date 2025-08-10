@@ -8,7 +8,7 @@
 
 *A **100% local alternative to Manus AI**, this voice-enabled AI assistant autonomously browses the web, writes code, and plans tasks while keeping all data on your device. Tailored for local reasoning models, it runs entirely on your hardware, ensuring complete privacy and zero cloud dependency.*
 
-[![Visit H1DR4](https://img.shields.io/static/v1?label=Website&message=H1DR4&color=blue&style=flat-square)](https://h1dr4.dev) ![License](https://img.shields.io/badge/license-GPL--3.0-green) [![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289DA?logo=discord&logoColor=white)](https://discord.gg/8hGDaME3TC) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/fosowl.svg?style=social&label=Update%20%40Fosowl)](https://x.com/Martin993886460) [![GitHub stars](https://img.shields.io/github/stars/h1dr4/h1dr4?style=social)](https://github.com/h1dr4/h1dr4/stargazers)
+[![Visit H1DR4](https://img.shields.io/static/v1?label=Website&message=H1DR4&color=blue&style=flat-square)](https://h1dr4.dev) ![License](https://img.shields.io/badge/license-GPL--3.0-green) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/fosowl.svg?style=social&label=Update%20%40Fosowl)](https://x.com/h1dr4_agent) [![GitHub stars](https://img.shields.io/github/stars/h1dr4/h1dr4?style=social)](https://github.com/h1dr4/h1dr4/stargazers)
 
 ### Why H1DR4 ?
 
@@ -27,8 +27,6 @@
 ### **Demo**
 
 > *Can you search for the H1DR4 project, learn what skills are required, then open the CV_candidates.zip and then tell me which match best the project*
-
-https://github.com/user-attachments/assets/b8ca60e9-7b3b-4533-840e-08f9ac426316
 
 Disclaimer: This demo, including all the files that appear (e.g: CV_candidates.zip), are entirely fictional. We are not a corporation, we seek open-source contributors not candidates.
 

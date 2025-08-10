@@ -1,4 +1,4 @@
-# H1DR4: Private, Local Manus Alternative.
+# H1DR4: Private, Local Assistant.
 
 <p align="center">
 <img align="center" src="./IMG_2496.PNG" width="300" height="300" alt="H1DR4 Logo">
@@ -6,7 +6,7 @@
 
   English | [中文](./README_CHS.md) | [繁體中文](./README_CHT.md) | [Français](./README_FR.md) | [日本語](./README_JP.md) | [Português (Brasil)](./README_PTBR.md) | [Español](./README_ES.md)
 
-*A **100% local alternative to Manus AI**, this voice-enabled AI assistant autonomously browses the web, writes code, and plans tasks while keeping all data on your device. Tailored for local reasoning models, it runs entirely on your hardware, ensuring complete privacy and zero cloud dependency.*
+This voice-enabled AI assistant autonomously browses the web, writes code, investigates and plans tasks while keeping all data on your device. Tailored for local reasoning models, it runs entirely on your hardware, ensuring complete privacy and zero cloud dependency.*
 
 [![Visit H1DR4](https://img.shields.io/static/v1?label=Website&message=H1DR4&color=blue&style=flat-square)](https://h1dr4.dev) ![License](https://img.shields.io/badge/license-GPL--3.0-green) (https://x.com/h1dr4_agent) [![GitHub stars](https://img.shields.io/github/stars/h1dr4/h1dr4?style=social)](https://github.com/h1dr4/h1dr4/stargazers)
 

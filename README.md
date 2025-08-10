@@ -1,7 +1,7 @@
 # H1DR4: Private, Local Manus Alternative.
 
 <p align="center">
-<img align="center" src="./media/agentic_seek_logo.png" width="300" height="300" alt="H1DR4 Logo">
+<img align="center" src="./IMG_2496.PNG" width="300" height="300" alt="H1DR4 Logo">
 <p>
 
   English | [中文](./README_CHS.md) | [繁體中文](./README_CHT.md) | [Français](./README_FR.md) | [日本語](./README_JP.md) | [Português (Brasil)](./README_PTBR.md) | [Español](./README_ES.md)

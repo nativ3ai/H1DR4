@@ -46,3 +46,4 @@ openai
 sniffio
 ordered_set
 pypinyin
+python-multipart

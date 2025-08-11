@@ -207,11 +207,11 @@ async def get_latest_answer():
         return JSONResponse(status_code=200, content=query_resp_history[-1])
     return JSONResponse(status_code=404, content={"error": "No answer available"})
 
-async def think_wrapper(interaction, query):
+async def think_wrapper(interaction, query, agent_type: str | None = None):
     try:
         interaction.last_query = query
         logger.info("Agents request is being processed")
-        success = await interaction.think()
+        success = await interaction.think(agent_type)
         if not success:
             interaction.last_answer = "Error: No answer from agent"
             interaction.last_reasoning = "Error: No reasoning from agent"
@@ -240,7 +240,8 @@ async def process_query(request: QueryRequest):
         success="false",
         blocks={},
         status="Ready",
-        uid=str(uuid.uuid4())
+        uid=str(uuid.uuid4()),
+        files=[]
     )
     if is_generating:
         logger.warning("Another query is being processed, please wait.")
@@ -248,7 +249,7 @@ async def process_query(request: QueryRequest):
 
     try:
         is_generating = True
-        success = await think_wrapper(interaction, request.query)
+        success = await think_wrapper(interaction, request.query, request.agent_type)
         is_generating = False
 
         if not success:
@@ -294,6 +295,14 @@ async def process_query(request: QueryRequest):
         if config.getboolean('MAIN', 'save_session'):
             interaction.save_session()
 
+@api.get("/files/{filename}")
+async def get_file(filename: str):
+    work_dir = config['MAIN']['work_dir']
+    file_path = os.path.join(work_dir, filename)
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    return JSONResponse(status_code=404, content={"error": "File not found"})
+
 @api.post("/upload")
 async def upload_files(files: List[UploadFile] = File(...)):
     global is_generating, query_resp_history
@@ -320,7 +329,7 @@ async def upload_files(files: List[UploadFile] = File(...)):
 
     try:
         is_generating = True
-        success = await think_wrapper(interaction, prompt)
+        success = await think_wrapper(interaction, prompt, "file_agent")
         is_generating = False
 
         if not success:
@@ -332,6 +341,7 @@ async def upload_files(files: List[UploadFile] = File(...)):
             logger.error("No current agent found")
             blocks_json = {}
 
+        file_urls = [f"/files/{os.path.basename(p)}" for p in file_paths]
         query_resp = {
             "done": "true",
             "answer": interaction.last_answer,
@@ -340,7 +350,8 @@ async def upload_files(files: List[UploadFile] = File(...)):
             "success": str(interaction.last_success),
             "blocks": blocks_json,
             "status": "Ready",
-            "uid": str(uuid.uuid4())
+            "uid": str(uuid.uuid4()),
+            "files": file_urls,
         }
         query_resp_history.append(query_resp)
 

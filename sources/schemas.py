@@ -6,6 +6,7 @@ from sources.utility import pretty_print
 class QueryRequest(BaseModel):
     query: str
     tts_enabled: bool = True
+    agent_type: str | None = None
 
     def __str__(self):
         return f"Query: {self.query}, Language: {self.lang}, TTS: {self.tts_enabled}, STT: {self.stt_enabled}"
@@ -14,6 +15,7 @@ class QueryRequest(BaseModel):
         return {
             "query": self.query,
             "tts_enabled": self.tts_enabled,
+            "agent_type": self.agent_type,
         }
 
 class QueryResponse(BaseModel):
@@ -25,6 +27,7 @@ class QueryResponse(BaseModel):
     blocks: dict
     status: str
     uid: str
+    files: list[str] | None = None
 
     def __str__(self):
         return f"Done: {self.done}, Answer: {self.answer}, Agent Name: {self.agent_name}, Success: {self.success}, Blocks: {self.blocks}, Status: {self.status}, UID: {self.uid}"
@@ -38,7 +41,8 @@ class QueryResponse(BaseModel):
             "success": self.success,
             "blocks": self.blocks,
             "status": self.status,
-            "uid": self.uid
+            "uid": self.uid,
+            "files": self.files
         }
 
 class executorResult:

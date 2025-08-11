@@ -134,12 +134,13 @@ function App() {
   const updateData = (data) => {
     setResponseData((prev) => ({
       ...prev,
-      blocks: data.blocks || prev.blocks || null,
+      blocks: data.blocks || prev?.blocks || null,
       done: data.done,
       answer: data.answer,
       agent_name: data.agent_name,
       status: data.status,
       uid: data.uid,
+      files: data.files || prev?.files || [],
     }));
   };
 
@@ -433,6 +434,16 @@ function App() {
                     <div className="block">
                       <p className="block-tool">Tool: No tool in use</p>
                       <pre>No file opened</pre>
+                    </div>
+                  )}
+                  {responseData?.files && responseData.files.length > 0 && (
+                    <div className="files">
+                      <h4>Processed Files:</h4>
+                      {responseData.files.map((file, idx) => (
+                        <a key={idx} href={`${BACKEND_URL}${file}`} download>
+                          {file.split('/').pop()}
+                        </a>
+                      ))}
                     </div>
                   )}
                 </div>

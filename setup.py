@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="agenticSeek",
+    name="H1dR4",
     version="0.1.0",
-    author="Fosowl",
-    author_email="mlg.fcu@gmail.com",
-    description="The open, local alternative to ManusAI",
+    author="WeXBT-Codex-Manus-H1DR4",
+    author_email="na",
+    description="NA",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Fosowl/agenticSeek",
+    url="https://github.com/nativ3ai/h1dr4",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[

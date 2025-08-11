@@ -146,12 +146,21 @@ class Interaction:
         self.is_active = True
         self.last_query = query
     
-    async def think(self) -> bool:
-        """Request AI agents to process the user input."""
+    async def think(self, agent_type: str | None = None) -> bool:
+        """Request AI agents to process the user input.
+
+        Args:
+            agent_type: Optionally force the use of a specific agent type.
+        """
         push_last_agent_memory = False
         if self.last_query is None or len(self.last_query) == 0:
             return False
-        agent = self.router.select_agent(self.last_query)
+
+        agent = None
+        if agent_type:
+            agent = self.router.get_agent_by_type(agent_type)
+        if agent is None:
+            agent = self.router.select_agent(self.last_query)
         if agent is None:
             return False
 

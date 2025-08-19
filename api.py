@@ -289,7 +289,11 @@ async def process_query(request: QueryRequest):
         return JSONResponse(status_code=200, content=query_resp.jsonify())
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
-        sys.exit(1)
+        is_generating = False
+        query_resp.answer = ""
+        query_resp.reasoning = f"Error: {str(e)}"
+        query_resp.success = "false"
+        return JSONResponse(status_code=500, content=query_resp.jsonify())
     finally:
         logger.info("Processing finished")
         if config.getboolean('MAIN', 'save_session'):

@@ -167,7 +167,7 @@ class Interaction:
         if agent.type == "reasoning_agent":
             pretty_print("This query requires advanced reasoning. Do you want to proceed with the intelligence reasoning endpoint? (y/n)", color="warning")
             confirmation = self.read_stdin()
-            if confirmation.lower() != 'y':
+            if confirmation is not None and confirmation.lower() != 'y':
                 pretty_print("Using normal agent as fallback.", color="status")
                 agent = self.router.get_agent_by_type("casual_agent")
 

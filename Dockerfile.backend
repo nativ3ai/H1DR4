@@ -10,7 +10,7 @@ RUN apt-get update -y --allow-insecure-repositories && apt-get install -y \
     unzip \
     xvfb \
     libxss1 \
-    libappindicator1 \
+    libayatana-appindicator3-1 \
     fonts-liberation \
     libnss3 \
     libatk1.0-0 \

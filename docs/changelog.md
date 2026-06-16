@@ -13,6 +13,7 @@ Date: 2026-06-17 ET
 - Case Pool V2 model with shared public funding and refund-aware deposit tracking.
 - Crime Token documentation: H1DR4-denominated attention markets for cases, bonding curve, graduation, and fee routing.
 - SKYNET documentation for entity profiling and case enrichment.
+- Full SKYNET historical bases archive linked to the production `/bases` page.
 - Public case study for a headless-agent FBI wanted lead case file.
 - Clean research brief for X-native community investigation formalization.
 - Lightweight `@h1dr4/agent-toolkit` MCP helper package.

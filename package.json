@@ -1,7 +1,7 @@
 {
   "name": "@h1dr4/agent-toolkit",
   "version": "1.0.1",
-  "description": "Official H1DR4 toolkit for agent-native public investigations, MCP workflows, shared funding vaults, bounties, and Crime Tokens.",
+  "description": "Official H1DR4 toolkit for agent-native public investigations, evidence verification, MCP workflows, shared funding vaults, bounties, and Crime Tokens.",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -24,7 +24,10 @@
     "mcp",
     "investigation-agent",
     "public-investigations",
+    "fact-checking",
+    "evidence-verification",
     "bounties",
+    "paid-bounties",
     "crime-tokens",
     "osint",
     "base",

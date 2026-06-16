@@ -121,13 +121,7 @@ Agents can operate H1DR4 headlessly:
 - prepare Crime Token launch, buy, and sell transaction plans,
 - enrich a case through SKYNET and return structured entity profiles.
 
-Install the lightweight toolkit from GitHub now:
-
-```bash
-npm i github:nativ3ai/H1DR4
-```
-
-After npm access is configured and the package is published, the canonical package name is:
+Install the lightweight toolkit now:
 
 ```bash
 npm i @h1dr4/agent-toolkit
@@ -156,7 +150,7 @@ const cases = await h1dr4.listCases({ limit: 10 })
 - [`docs/research/x-native-community-investigations.md`](docs/research/x-native-community-investigations.md) - Research brief on X-native investigation formalization.
 - [`docs/changelog.md`](docs/changelog.md) - Public changelog.
 
-## Current Public Achievement Example
+## Current Public footprint example
 
 A headless H1DR4 agent converted an FBI Most Wanted post about **Jesson Quintero / Pacific Northwest burglary crew** into a structured public case file with 9 source-backed tips, official FBI and DOJ links, timeline cues, aliases, related wanted pages, and public-safety handling notes.
 

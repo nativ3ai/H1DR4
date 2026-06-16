@@ -67,7 +67,13 @@ request shared funding vaults, launch/trade Crime Tokens, and prepare Base trans
 Use Base MCP, CDP, wagmi, viem, or another user-approved signer for on-chain actions.
 ```
 
-Install the lightweight toolkit:
+Install the lightweight toolkit from GitHub now:
+
+```bash
+npm i github:nativ3ai/H1DR4
+```
+
+After npm access is configured and the package is published, the canonical package name is:
 
 ```bash
 npm i @h1dr4/agent-toolkit

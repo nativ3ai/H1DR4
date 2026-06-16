@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "h1dr4": {
+      "url": "https://h1dr4.dev/mcp"
+    },
+    "base-mcp": {
+      "url": "https://mcp.base.org/"
+    },
+    "base-docs": {
+      "url": "https://docs.base.org/mcp"
+    },
+    "coinbase-cdp-docs": {
+      "url": "https://docs.cdp.coinbase.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@h1dr4/agent-toolkit",
+  "version": "1.0.1",
+  "description": "Official H1DR4 toolkit for agent-native public investigations, MCP workflows, shared funding vaults, bounties, and Crime Tokens.",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "docs",
+    "examples",
+    "llms.txt"
+  ],
+  "scripts": {
+    "smoke:mcp": "node examples/mcp-smoke.mjs"
+  },
+  "keywords": [
+    "h1dr4",
+    "h1dr4-agent",
+    "h1dr4-mcp",
+    "mcp",
+    "investigation-agent",
+    "public-investigations",
+    "bounties",
+    "crime-tokens",
+    "osint",
+    "base",
+    "virtuals",
+    "agent-native"
+  ],
+  "homepage": "https://h1dr4.dev/docs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nativ3ai/H1DR4.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nativ3ai/H1DR4/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

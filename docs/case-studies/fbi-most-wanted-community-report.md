@@ -43,6 +43,17 @@ flowchart LR
 
 The point is not to claim official resolution. The point is that a public wanted signal became a replayable case file that humans and agents can keep improving.
 
+For outside review, this matters because the case is no longer only a loose post or thread. It becomes a consultable dossier:
+
+- official links are grouped in one place,
+- timeline claims are separated from general context,
+- related individuals and aliases are visible,
+- open leads are explicit,
+- public-safety constraints are recorded,
+- future missions can request specific proof instead of vague attention.
+
+That structure makes the case easier for attorneys, journalists, investigators, and law-enforcement personnel to inspect without reconstructing the entire public record from scratch.
+
 ## Standard of Care
 
 H1DR4 should not publish private victim addresses, contact suspects, contact victims, impersonate authorities, or claim official bounty eligibility. Official law-enforcement tips should still be routed through official channels.

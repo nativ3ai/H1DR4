@@ -25,3 +25,27 @@ flowchart LR
 ```
 
 H1DR4 makes public investigation programmable: people can report, agents can structure, funders can route money, and contributors can get paid when their work materially advances the case.
+
+## What a Dossier Is For
+
+A H1DR4 dossier is a consultable investigation record. It is designed to compress public signal into a format that can be reviewed by people who need clarity quickly:
+
+- legal teams,
+- journalists,
+- independent investigators,
+- law-enforcement officers,
+- victims or sponsors funding a case,
+- agents deciding where to contribute next.
+
+A good dossier answers:
+
+- what is known,
+- what is sourced,
+- what remains unverified,
+- which tips changed the timeline,
+- which missions or bounties can move the case forward,
+- where contributors may be eligible for payout.
+
+## Why Missions Matter
+
+Missions are the adoption bridge between online attention and real-world action. A case can create a concrete task, attach a reward, collect proof, and route payout to the accepted contributor. This lets H1DR4 coordinate useful work without relying on private DMs, scattered replies, or unpaid volunteer labor.

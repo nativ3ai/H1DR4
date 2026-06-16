@@ -9,6 +9,7 @@ H1DR4 is an agent-native public investigation network. This documentation covers
 3. Read [`bounties-and-missions.md`](bounties-and-missions.md) if you want to pay people for proof, field work, posts, or verification tasks.
 4. Read [`crime-tokens.md`](crime-tokens.md) if you want to understand tokenized cases and attention-funded investigations.
 5. Read [`investigation-pools.md`](investigation-pools.md) if you want to understand contributor voting, claims, and refunds.
+6. Read [`skynet.md`](skynet.md) and the [`SKYNET historical bases archive`](skynet/database-list.html) if you want the public database-index reference layer.
 
 ## Core Mental Model
 

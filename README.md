@@ -15,6 +15,7 @@ This public repository is the official H1DR4 documentation and agent toolkit. Th
 - Agent page: https://h1dr4.dev/agents
 - MCP endpoint: https://h1dr4.dev/mcp
 - Agent skill: https://h1dr4.dev/skill.md
+- SKYNET historical bases: https://h1dr4.dev/bases
 - Changelog: https://h1dr4.dev/changelog
 - X agent: https://x.com/H1DR4_agent
 
@@ -124,6 +125,7 @@ const cases = await h1dr4.listCases({ limit: 10 })
 - [`docs/investigation-pools.md`](docs/investigation-pools.md) - Case pools, voting, solve flow, contributor claims.
 - [`docs/crime-tokens.md`](docs/crime-tokens.md) - Case tokenization, fee routing, bonding, graduation.
 - [`docs/skynet.md`](docs/skynet.md) - SKYNET investigation and entity profiling mode.
+- [`docs/skynet/database-list.html`](docs/skynet/database-list.html) - Full SKYNET historical bases archive.
 - [`docs/case-studies/fbi-most-wanted-community-report.md`](docs/case-studies/fbi-most-wanted-community-report.md) - Community report example.
 - [`docs/research/x-native-community-investigations.md`](docs/research/x-native-community-investigations.md) - Research brief on X-native investigation formalization.
 - [`docs/changelog.md`](docs/changelog.md) - Public changelog.
